@@ -11,7 +11,7 @@ permissions:
 jobs:
 
   build:
-    if: contains(github.event.pull_request.labels.*.name, 'tag:')
+    if: contains(toJSON(github.event.pull_request.labels.*.name), 'tag:')
     runs-on: ubuntu-latest
     
     steps:
