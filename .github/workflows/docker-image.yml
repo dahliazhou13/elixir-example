@@ -5,13 +5,15 @@ on:
     types: [ labeled, opened, synchronize, reopened, edited ]
     branches: [ "main" ]
 
+permissions:
+  contents: write
+
 jobs:
 
   build:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
     
     - name: Get Tag name
       id: get-tag
@@ -42,3 +44,15 @@ jobs:
         context: hello/
         push: true
         tags: zhoudoris13/hello-elixir:${{ steps.get-tag.outputs.tag }}
+    
+    - uses: actions/checkout@v4
+
+    - name: Update Tag in values file
+      run: |
+        git config --global user.name 'Dahlia Zhou'
+        git config --global user.email 'dahlizhou13@users.noreply.github.com'
+        git checkout $GITHUB_BASE_REF
+        yq '.image.tag = ${{ steps.get-tag.outputs.tag }}' hello/values.yaml
+        git commit -am "Automated report"
+        git push
+      shell: bash
