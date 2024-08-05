@@ -18,8 +18,8 @@ jobs:
       shell: bash
       run: |
         set -x
-        CHARS="[],"
-        TAG=$(echo $LABELS | grep tag: | sed "s/[$CHARS]//g")
+        CHARS="\","
+        TAG=$(echo $LABELS | jq | grep tag: | sed "s/[$CHARS]//g" | tr -d ' ')
         echo "tag=${TAG#tag:}" >> "$GITHUB_OUTPUT"
       env: 
         LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
