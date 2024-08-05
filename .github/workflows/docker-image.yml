@@ -57,7 +57,7 @@ jobs:
         git config --global user.email 'dahlizhou13@users.noreply.github.com'
         git checkout $GITHUB_HEAD_REF
         yq -i '.image.tag = strenv(TAG)' hello/values.yaml
-        git commit -am "Automated report"
+        git commit -am "CD: Update image tag in Helm values file"
         git push
       shell: bash
       env:
