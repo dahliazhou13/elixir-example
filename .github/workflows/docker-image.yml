@@ -54,7 +54,9 @@ jobs:
         git config --global user.name 'Dahlia Zhou'
         git config --global user.email 'dahlizhou13@users.noreply.github.com'
         git checkout $GITHUB_HEAD_REF
-        yq '.image.tag = ${{ steps.get-tag.outputs.tag }}' hello/values.yaml
+        yq -i '.image.tag = strenv(TAG)' hello/values.yaml
         git commit -am "Automated report"
         git push
       shell: bash
+      env:
+        TAG: ${{ steps.get-tag.outputs.tag }}
