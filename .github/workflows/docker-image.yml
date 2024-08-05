@@ -18,15 +18,8 @@ jobs:
       shell: bash
       run: |
         set -x
-        TAG=''
-        for i in "${LABELS[@]}"; do
-          if [[ $i == "tag:"* ]]; then
-            TAG=$i
-          fi
-        done
-        echo "tag=${TAG#tags:}" >> "$GITHUB_OUTPUT" 
-      env:
-        LABELS: ${{ github.event.pull_request.labels.*.name }}
+        LABELS=${{ toJSON(github.event.pull_request.labels.*.name) }}
+        echo $LABELS | grep tag:
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
