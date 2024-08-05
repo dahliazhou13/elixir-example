@@ -25,7 +25,9 @@ jobs:
         echo "tag=${TAG#tag:}" >> "$GITHUB_OUTPUT"
       env: 
         LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
-
+    
+    - uses: actions/checkout@v4
+    
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
 
@@ -44,8 +46,6 @@ jobs:
         context: hello/
         push: true
         tags: zhoudoris13/hello-elixir:${{ steps.get-tag.outputs.tag }}
-    
-    - uses: actions/checkout@v4
 
     - name: Update Tag in values file
       run: |
