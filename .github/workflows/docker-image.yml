@@ -17,6 +17,7 @@ jobs:
       id: get-tag
       shell: bash
       run: |
+        set -x
         echo ${{github.event.pull_request.labels.*.name}} | grep tag
         echo "tag=${TAG#tags:}" >> "$GITHUB_OUTPUT" 
 
