@@ -18,7 +18,13 @@ jobs:
       shell: bash
       run: |
         set -x
-        echo ${{github.event.pull_request.labels.*.name}} | grep tag
+        LABELS=${{github.event.pull_request.labels.*.name}}
+        TAG=''
+        for i in "${LABELS[@]}"; do
+          if [[ $i == "tag:"* ]]; then
+            TAG=$i
+          fi
+        done
         echo "tag=${TAG#tags:}" >> "$GITHUB_OUTPUT" 
 
     - name: Set up QEMU
