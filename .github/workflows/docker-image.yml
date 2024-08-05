@@ -18,8 +18,10 @@ jobs:
       shell: bash
       run: |
         set -x
+        CHARS="[],"
         LABELS=${{ toJSON(github.event.pull_request.labels.*.name) }}
-        echo $LABELS | grep tag:
+        TAG=$(echo $LABELS | grep tag: | sed "s/[$CHARS]//g")
+        echo "tag=${TAG#tag:}" >> "$GITHUB_OUTPUT"
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
