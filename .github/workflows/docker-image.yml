@@ -51,7 +51,7 @@ jobs:
       run: |
         git config --global user.name 'Dahlia Zhou'
         git config --global user.email 'dahlizhou13@users.noreply.github.com'
-        git checkout ${{ github.event.pull_request.base.ref }}
+        git checkout $GITHUB_HEAD_REF
         yq '.image.tag = ${{ steps.get-tag.outputs.tag }}' hello/values.yaml
         git commit -am "Automated report"
         git push
