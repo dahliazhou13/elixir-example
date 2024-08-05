@@ -1,1 +1,3 @@
-imageSecret: regcred
+image:
+  secret: regcred
+  tag: latest
