@@ -18,7 +18,7 @@ jobs:
       shell: bash
       run: |
         set -x
-        LABELS=${{github.event.pull_request.labels.*.name}}
+        LABELS=${{github.event.pull_request.labels.*.name}}[0]
         TAG=''
         for i in "${LABELS[@]}"; do
           if [[ $i == "tag:"* ]]; then
