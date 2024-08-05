@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-app
+  labels:
+    app: hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.imageSecret }}
+      containers:
+      - name: hello
+        image: "zhoudoris13/my-repo:helloelixir"
+        ports:
+        - containerPort: 4000
+        env:
+{{ include "env" . | indent 10 }}
